@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubepro1-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kubepro1
+  template:
+    metadata:
+      labels:
+        app: kubepro1
+    spec:
+      containers:
+        - name: kubepro1
+          image: saibanpagarkar/kubepro1
+          ports:
+            - containerPort: 80
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "Served by $(hostname)" >> /usr/local/apache2/htdocs/index.html && \
+              httpd-foreground
